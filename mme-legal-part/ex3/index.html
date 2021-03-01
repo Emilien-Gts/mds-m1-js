@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/materia/bootstrap.min.css">
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <form 
+                        @submit.prevent="onSubmit"
+                        class="d-flex flex-column"
+                    >
+                        <h4>Ajouter une carte</h4>
+                        <div class="form-group">
+                            <input type="text" ref="title" class="form-control" placeholder="Titre" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ref="author" class="form-control" placeholder="Auteur" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" ref="date" class="form-control" placeholder="Date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" ref="link" class="form-control" placeholder="Lien" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Ajouter à la liste</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-end">
+                        <button 
+                            @click="reverseItems"
+                            class="btn btn-primary"
+                        >Inverser la liste</button>
+                    </div>
+                    <ul class="d-flex flex-row flex-wrap justify-content-between" style="list-style: none !important; padding: 0 !important">
+                        <li 
+                            v-for="item in items" 
+                            :key="item.id" 
+                            v-bind:id="item.id"
+                            class="my-2 ml-3"
+                        >
+                            <div class="card" style="width: 15rem;">
+                                <h5 class="card-header">{{ item.title }}</h5>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.publicationDate }}</h5>
+                                    <p class="card-text">{{ item.author }}</p>
+                                    <a :href="item.urlBiography">Cliquez ici</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                items: [
+                    {
+                        id: 0,
+                        title: 'My title 0',
+                        author: 'My author 0',
+                        publicationDate: '19/10/2020',
+                        urlBiography: 'http://perdu.com'
+                    },
+                    {
+                        id: 1,
+                        title: 'My title 1',
+                        author: 'My author 1',
+                        publicationDate: '20/10/2020',
+                        urlBiography: 'https://google.com'
+                    },
+                    {
+                        id: 2,
+                        title: 'AAA',
+                        author: 'My author 2',
+                        publicationDate: '21/10/2020',
+                        urlBiography: 'https://youtube.com'
+                    },
+                    {
+                        id: 3,
+                        title: 'My title 3',
+                        author: 'My author 3',
+                        publicationDate: '22/10/2020',
+                        urlBiography: 'https://batiscript.com'
+                    },
+                    {
+                        id: 4,
+                        title: 'My title 4',
+                        author: 'My author 4',
+                        publicationDate: '23/10/2020',
+                        urlBiography: 'https://scantrad.net'
+                    },
+                ]
+            },
+            computed: {
+                titleUppercase: function () {
+                    return this.title.toUpperCase();
+                }
+            },
+            methods: {
+                reverseItems() {
+                    const newItems = this.items.slice().reverse(); 
+                    this.items = newItems;
+                },
+                sort() {
+                    return this.items.sort(function(a, b) {
+                        var textA = a.title.toUpperCase();
+                        var textB = b.title.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    });
+                },
+                onSubmit(){
+                    const item = {
+                        id: this.items.length,
+                        title: this.$refs.title.value,
+                        author: this.$refs.author.value,
+                        publicationDate: this.$refs.date.value,
+                        urlBiography: this.$refs.link.value,
+                    };
+                    
+                    this.items.push(item);
+                    this.sort();
+                },
+            },
+            created: function() {
+                this.sort();
+            }
+        });
+    </script>
+</body>
+</html>

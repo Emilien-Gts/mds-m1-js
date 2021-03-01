@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ex1</title>
+  </head>
+  <body>
+    <h1>Coucou</h1>
+    <script src="./js/vue.js"></script>
+    <script type="text/javascript">
+      var vm = new Vue({
+        data: { title: "title" },
+        computed: {
+          titleUppercase: function () {
+            return this.title.toUpperCase();
+          },
+        },
+        methods: {
+          reversed(val) {
+            return val.split("").reverse().join("");
+          },
+        },
+      });
+
+      console.log(
+        vm.title,
+        vm.titleUppercase,
+        vm.reversed(vm.title)
+        vm.reversed(vm.titleUppercase)
+      );
+    </script>
+  </body>
+</html>

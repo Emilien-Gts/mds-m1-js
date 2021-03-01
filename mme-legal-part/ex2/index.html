@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ex1</title>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:id="id">
+            <p>Titre : {{ title }}</p>
+            <p>Author : {{ author }}</p>
+            <p>Date de publication : {{ publicationDate }}</p>
+            <p>Lien: <span v-html="htmlLink"></span></p>
+        </div>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: { 
+                id: 1,
+                title: 'My title',
+                author: 'My author',
+                publicationDate: '19/10/2020',
+                urlBiography: 'http://perdu.com'
+            },
+            computed: {
+                titleUppercase: function () {
+                    return this.title.toUpperCase();
+                },
+                htmlLink: function() {
+                    return '<a href="' + this.urlBiography +'">Click here</a>';
+                }
+            },
+            methods: {
+                reversed(val) {
+                    return val.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
